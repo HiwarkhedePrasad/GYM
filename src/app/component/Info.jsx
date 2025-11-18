@@ -67,7 +67,7 @@ export default function HomeHeroInfo() {
                 href="tel:(323)238-0638"
                 className="text-sm sm:text-lg font-medium text-white hover:text-gray-300 transition-colors duration-200"
               >
-                (323) 238 - 0638
+                +91 9284905505
               </a>
             </div>
           </motion.div>
