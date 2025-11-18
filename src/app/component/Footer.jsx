@@ -117,7 +117,7 @@ export default function Footer() {
       <div className="border-t border-neutral-800">
         <div className="container mx-auto px-4 py-4 sm:py-6">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4 text-xs sm:text-sm text-gray-400">
-            <p className="text-center sm:text-left">© {new Date().getFullYear()} Gymfit X. All rights reserved.</p>
+            <p className="text-center sm:text-left">© {new Date().getFullYear()} Gymfit X. All rights reserved.--phiwarkhede05@gmail.com</p>
             <div className="flex gap-4 sm:gap-6">
               <Link href="/privacy" className="hover:text-white transition-colors duration-200">
                 Privacy Policy
