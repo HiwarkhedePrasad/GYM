@@ -2,32 +2,27 @@
 
 import { motion } from 'framer-motion';
 
-// Data for the trainers
 const trainersData = [
   {
     name: 'Rohan Verma',
     role: 'Personal Coach',
-    imgSrc: '/trainers/rohan.jpg', // Now using local image
-    // imgSrc: 'http://googleusercontent.com/image_collection/image_retrieval/10172667054723755190',
+    imgSrc: '/trainers/rohan.jpg',
   },
   {
     name: 'Priya Sharma',
     role: 'Personal Coach',
-    imgSrc: '/trainers/priya.jpg', // Now using local image
-    // imgSrc: 'http://googleusercontent.com/image_collection/image_retrieval/7678012537724276385',
+    imgSrc: '/trainers/priya.jpg',
   },
   {
     name: 'Arjun Singh',
     role: 'Personal Coach',
-    imgSrc: '/trainers/arjun.jpg', // Now using local image
-    // imgSrc: 'http://googleusercontent.com/image_collection/image_retrieval/16846093637362713871',
+    imgSrc: '/trainers/arjun.jpg',
   },
 ];
 
-// Re-usable Plus Icon
 const PlusIcon = () => (
   <svg
-    className="w-5 h-5 group-hover:hidden"
+    className="w-4 h-4 sm:w-5 sm:h-5 group-hover:hidden"
     fill="none"
     stroke="currentColor"
     viewBox="0 0 24 24"
@@ -42,10 +37,9 @@ const PlusIcon = () => (
   </svg>
 );
 
-// Arrow Icon
 const ArrowIcon = () => (
   <svg
-    className="w-5 h-5 hidden group-hover:block"
+    className="w-4 h-4 sm:w-5 sm:h-5 hidden group-hover:block"
     fill="none"
     stroke="currentColor"
     viewBox="0 0 24 24"
@@ -60,8 +54,6 @@ const ArrowIcon = () => (
   </svg>
 );
 
-
-// Individual Trainer Card Component
 function TrainerCard({ name, role, imgSrc, index }) {
   return (
     <motion.div
@@ -69,51 +61,47 @@ function TrainerCard({ name, role, imgSrc, index }) {
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
-      // Add delay based on index for staggered effect
       transition={{ duration: 0.5, delay: index * 0.2, type: 'spring', stiffness: 50 }}
     >
-      {/* Added overflow-hidden for the zoom effect */}
       <div className="relative flex justify-center w-full overflow-hidden">
         <img
           src={imgSrc}
           alt={name}
-          // Added transition-transform and group-hover:scale-110 for zoom
-          className="w-[250px] h-[300px] object-cover transition-transform duration-500 group-hover:scale-110"
+          className="w-full sm:w-[250px] h-[280px] sm:h-[300px] object-cover transition-transform duration-500 group-hover:scale-110"
           onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/250x300/e0e0e0/999?text=Image+Failed'; }}
         />
-        <button className="absolute bottom-4 right-4 bg-red-600 text-white p-3 transition-all duration-300 group-hover:bg-black hover:scale-105 z-10">
+        <button className="absolute bottom-4 right-4 bg-red-600 text-white p-2 sm:p-3 transition-all duration-300 group-hover:bg-black hover:scale-105 z-10">
           <PlusIcon />
           <ArrowIcon />
         </button>
       </div>
-      <div className="mt-6">
-        <h3 className="text-xl font-bold text-black uppercase">{name}</h3>
-        <p className="text-sm text-gray-500 uppercase tracking-wider">{role}</p>
+      <div className="mt-4 sm:mt-6">
+        <h3 className="text-lg sm:text-xl font-bold text-black uppercase">{name}</h3>
+        <p className="text-xs sm:text-sm text-gray-500 uppercase tracking-wider">{role}</p>
       </div>
     </motion.div>
   );
 }
 
-// Main Section Component
 export default function TrainersSection() {
   return (
     <section className="relative bg-white text-black min-h-screen flex items-center overflow-hidden">
-      <div className="container mx-auto px-4 relative z-10 py-24 sm:py-32">
+      <div className="container mx-auto px-4 relative z-10 py-16 sm:py-24 lg:py-32">
         
         {/* Section Header */}
-        <div className="relative flex justify-center items-center mb-16 -mt-16 sm:-mt-20 lg:-mt-24">
+        <div className="relative flex justify-center items-center mb-12 sm:mb-16 -mt-8 sm:-mt-16 lg:-mt-24">
           
-          {/* Background "TRAINERS" text */}
+          {/* Background "TRAINERS" text - Responsive sizing */}
           <h1
-            className="text-[8rem] [-webkit-text-stroke:2px_gray] sm:text-[10rem] lg:text-[12rem] font-extrabold text-transparent uppercase leading-none"
+            className="text-[6rem] sm:text-[8rem] md:text-[10rem] lg:text-[12rem] font-extrabold text-transparent uppercase leading-none [-webkit-text-stroke:1px_gray] sm:[-webkit-text-stroke:2px_gray]"
             aria-hidden="true"
           >
             TRAINERS
           </h1>
 
-          {/* Foreground Title */}
+          {/* Foreground Title - Better mobile spacing */}
           <motion.h2
-            className="absolute text-2xl sm:text-3xl text-center lg:text-4xl font-extrabold text-black uppercase"
+            className="absolute text-xl sm:text-2xl md:text-3xl lg:text-4xl text-center font-extrabold text-black uppercase px-4"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-100px' }}
@@ -123,12 +111,12 @@ export default function TrainersSection() {
           </motion.h2>
         </div>
 
-        {/* Trainers Grid */}
-        <div className="flex flex-col md:flex-row justify-center gap-3 mb-20">
+        {/* Trainers Grid - Better mobile layout */}
+        <div className="flex flex-col sm:flex-row sm:flex-wrap lg:flex-nowrap justify-center gap-6 sm:gap-4 lg:gap-3 mb-12 sm:mb-20">
           {trainersData.map((trainer, index) => (
             <TrainerCard
               key={index}
-              index={index} // Pass index for stagger
+              index={index}
               name={trainer.name}
               role={trainer.role}
               imgSrc={trainer.imgSrc}
@@ -138,15 +126,15 @@ export default function TrainersSection() {
 
         {/* Browse All Button */}
         <motion.div
-          className="flex justify-center"
+          className="flex justify-center px-4"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
-          transition={{ delay: 0.6, duration: 0.5 }} // Increased delay to wait for cards
+          transition={{ delay: 0.6, duration: 0.5 }}
         >
           <a
             href="/trainers"
-            className="bg-black text-white font-bold uppercase text-sm tracking-wider py-4 px-8 hover:bg-gray-800 transition-colors duration-300"
+            className="bg-black text-white font-bold uppercase text-xs sm:text-sm tracking-wider py-3 sm:py-4 px-6 sm:px-8 hover:bg-gray-800 transition-colors duration-300 w-full sm:w-auto text-center"
           >
             Browse Trainers
           </a>

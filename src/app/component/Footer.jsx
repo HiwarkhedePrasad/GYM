@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 import { Facebook, Instagram, Twitter, Youtube, Mail, Phone, MapPin } from 'lucide-react';
 
 const footerLinks = {
@@ -12,15 +11,7 @@ const footerLinks = {
     { label: 'Classes', href: '/classes' },
     { label: 'Trainers', href: '/trainers' },
     { label: 'Pricing', href: '/pricing' },
-    { label: 'Blog', href: '/blog' },
     { label: 'Contact', href: '/contact' },
-  ],
-  utility: [
-    { label: 'Style Guide', href: '/utility-pages/style-guide' },
-    { label: 'Start Here', href: '/utility-pages/start-here' },
-    { label: 'Licenses', href: '/utility-pages/licenses' },
-    { label: 'Changelog', href: '/utility-pages/changelog' },
-    { label: '404 Not Found', href: '/404' },
   ],
 };
 
@@ -35,24 +26,24 @@ export default function Footer() {
   return (
     <footer className="bg-black text-white">
       {/* Main Footer Content */}
-      <div className="container mx-auto px-4 py-16 sm:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+      <div className="container mx-auto px-4 py-12 sm:py-16 md:py-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 lg:gap-12">
           
           {/* Brand Column */}
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <Link href="/" aria-label="Gymfit X Home">
               <Image
                 src="https://cdn.prod.website-files.com/621d8b0423efcfa5ba281fb6/621d8b0423efcf26d6282089_logo-gymfit-x-template.svg"
                 alt="Gymfit X Logo"
-                width={140}
-                height={40}
-                className="h-10 w-auto"
+                width={120}
+                height={36}
+                className="h-8 sm:h-10 w-auto"
               />
             </Link>
-            <p className="text-gray-400 text-sm leading-relaxed">
+            <p className="text-gray-400 text-sm leading-relaxed max-w-sm">
               The gym for high impact athletes. Transform your body and mind with our expert trainers and world-class facilities.
             </p>
-            <div className="flex space-x-4">
+            <div className="flex space-x-3 sm:space-x-4">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
@@ -62,7 +53,7 @@ export default function Footer() {
                   className="bg-neutral-800 hover:bg-red-600 p-2 rounded transition-colors duration-300"
                   aria-label={social.label}
                 >
-                  <social.icon className="h-5 w-5" />
+                  <social.icon className="h-4 w-4 sm:h-5 sm:w-5" />
                 </a>
               ))}
             </div>
@@ -70,8 +61,8 @@ export default function Footer() {
 
           {/* Menu Links */}
           <div>
-            <h3 className="text-lg font-bold uppercase tracking-wider mb-6">Menu</h3>
-            <ul className="space-y-3">
+            <h3 className="text-base sm:text-lg font-bold uppercase tracking-wider mb-4 sm:mb-6">Menu</h3>
+            <ul className="space-y-2 sm:space-y-3">
               {footerLinks.menu.map((link) => (
                 <li key={link.href}>
                   <Link
@@ -85,48 +76,31 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Utility Pages */}
-          <div>
-            <h3 className="text-lg font-bold uppercase tracking-wider mb-6">Utility Pages</h3>
-            <ul className="space-y-3">
-              {footerLinks.utility.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-gray-400 hover:text-white transition-colors duration-200 text-sm"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
           {/* Contact Info */}
-          <div>
-            <h3 className="text-lg font-bold uppercase tracking-wider mb-6">Get In Touch</h3>
-            <ul className="space-y-4">
+          <div className="sm:col-span-2 lg:col-span-1">
+            <h3 className="text-base sm:text-lg font-bold uppercase tracking-wider mb-4 sm:mb-6">Get In Touch</h3>
+            <ul className="space-y-3 sm:space-y-4">
               <li className="flex items-start gap-3">
-                <Mail className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
+                <Mail className="h-4 w-4 sm:h-5 sm:w-5 text-red-600 flex-shrink-0 mt-0.5" />
                 <a
-                  href="mailto:contact@gymfitx.com"
-                  className="text-gray-400 hover:text-white transition-colors duration-200 text-sm"
+                  href="mailto:phiwarkhede05@gmail.com"
+                  className="text-gray-400 hover:text-white transition-colors duration-200 text-sm break-all"
                 >
-                  contact@gymfitx.com
+                  phiwarkhede05@gmail.com
                 </a>
               </li>
               <li className="flex items-start gap-3">
-                <Phone className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
+                <Phone className="h-4 w-4 sm:h-5 sm:w-5 text-red-600 flex-shrink-0 mt-0.5" />
                 <a
-                  href="tel:(323)238-0638"
+                  href="tel:+919284905505"
                   className="text-gray-400 hover:text-white transition-colors duration-200 text-sm"
                 >
-                  (323) 238 - 0638
+                  +91 9284905505
                 </a>
               </li>
               <li className="flex items-start gap-3">
-                <MapPin className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
-                <address className="text-gray-400 text-sm not-italic">
+                <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-red-600 flex-shrink-0 mt-0.5" />
+                <address className="text-gray-400 text-sm not-italic leading-relaxed">
                   Near dakhale niwas, sangam road,
                   <br />
                   Hingna Rd, Wanadongri,
@@ -141,10 +115,10 @@ export default function Footer() {
 
       {/* Bottom Bar */}
       <div className="border-t border-neutral-800">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
-            <p>© {new Date().getFullYear()} Gymfit X. All rights reserved.</p>
-            <div className="flex gap-6">
+        <div className="container mx-auto px-4 py-4 sm:py-6">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4 text-xs sm:text-sm text-gray-400">
+            <p className="text-center sm:text-left">© {new Date().getFullYear()} Gymfit X. All rights reserved.</p>
+            <div className="flex gap-4 sm:gap-6">
               <Link href="/privacy" className="hover:text-white transition-colors duration-200">
                 Privacy Policy
               </Link>

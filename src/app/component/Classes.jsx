@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useRef } from 'react';
 import Slider from 'react-slick';
 
+// Make sure these packages are installed: npm install slick-carousel react-slick
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -58,11 +59,8 @@ const classesData = [
   },
 ];
 
-
-// 1. Define a placeholder slide object
 const placeholderSlide = { type: 'placeholder' };
-
-// 2. Create the new slides array with two placeholders at the start
+// Adding placeholders so the first real card doesn't start at the very edge
 const slides = [placeholderSlide, placeholderSlide, ...classesData];
 
 const ArrowIcon = () => (
@@ -85,11 +83,11 @@ const ArrowIcon = () => (
 const NavButton = ({ onClick, direction }) => (
   <button
     onClick={onClick}
-    className="bg-neutral-800 hover:bg-neutral-700 text-white w-8 h-8 flex items-center justify-center transition-colors text-sm"
+    className="bg-neutral-800 hover:bg-neutral-700 text-white w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center transition-colors text-sm rounded"
   >
     {direction === 'left' ? (
       <svg
-        className="w-3 h-3"
+        className="w-3 h-3 sm:w-4 sm:h-4"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -104,7 +102,7 @@ const NavButton = ({ onClick, direction }) => (
       </svg>
     ) : (
       <svg
-        className="w-3 h-3"
+        className="w-3 h-3 sm:w-4 sm:h-4"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -121,7 +119,6 @@ const NavButton = ({ onClick, direction }) => (
   </button>
 );
 
-// Card component (using the smaller design from last time)
 function ClassCard({ title, description, href, imgSrc }) {
   return (
     <motion.div
@@ -136,14 +133,16 @@ function ClassCard({ title, description, href, imgSrc }) {
           <img
             src={imgSrc}
             alt={title}
-            className="w-full h-32 object-cover transition-transform duration-500 group-hover:scale-105"
+            className="w-full h-32 sm:h-36 object-cover transition-transform duration-500 group-hover:scale-105"
           />
         </div>
-        <div className="bg-black p-3">
-          <h3 className="text-base font-bold text-white mb-2 truncate">
+        <div className="bg-zinc-900 p-3 sm:p-4">
+          <h3 className="text-sm sm:text-base font-bold text-white mb-2 truncate">
             {title}
           </h3>
-          <p className="text-xs text-neutral-400 mb-3 line-clamp-2">{description}</p>
+          <p className="text-xs text-neutral-400 mb-3 line-clamp-2">
+            {description}
+          </p>
           <div className="flex items-center font-bold text-xs text-white uppercase tracking-wider group-hover:text-red-500 transition-colors">
             Class Information
             <ArrowIcon />
@@ -157,54 +156,60 @@ function ClassCard({ title, description, href, imgSrc }) {
 export default function ClassesSection() {
   const sliderRef = useRef(null);
 
-  // 3. Update slider settings
   const settings = {
     dots: false,
-    infinite: true, // <-- Set to false
+    infinite: true,
     speed: 500,
-    slidesToShow: 4, // <-- Show 4 "parts"
-    slidesToScroll: 1, // <-- Scroll 1 at a time
-    initialSlide: 0, // <-- Start at the very beginning
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    initialSlide: 0,
     arrows: false,
     responsive: [
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3, // On tablet, show 3 (e.g., P, P, C1)
+          slidesToShow: 3,
           slidesToScroll: 1,
         },
       },
       {
         breakpoint: 768,
         settings: {
-          slidesToShow: 2, // On small tablet, show 2 (e.g., P, P)
+          slidesToShow: 2,
           slidesToScroll: 1,
         },
       },
       {
         breakpoint: 640,
         settings: {
-          slidesToShow: 1, // On mobile, show 1 (e.g., P)
+          slidesToShow: 1,
           slidesToScroll: 1,
+          centerMode: true,
+          centerPadding: '20px',
         },
       },
     ],
   };
 
   return (
-    <section className="relative bg-black text-white py-16 sm:py-20 overflow-hidden">
+    <section className="relative bg-black text-white py-20 sm:py-32 md:py-40 overflow-hidden">
       <div className="container mx-auto px-4 relative z-10">
-        <div className="flex justify-between items-center mb-8">
-          <div className="relative -mt-10 sm:-mt-12 lg:-mt-16">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-4">
+          
+          {/* MOBILE OPTIMIZATION HERE: 
+            Changed fixed font sizes to text-[18vw] to ensure it spans the full width 
+            on mobile devices, matching the "About Us" aesthetic.
+          */}
+          <div className="relative -mt-6 sm:-mt-10 lg:-mt-16 w-full sm:w-auto flex justify-center sm:block">
             <h1
-  className="[-webkit-text-stroke:0.5px_gray] text-6xl sm:text-7xl md:text-8xl lg:text-[8rem] font-extrabold text-black/5 uppercase leading-none"
-  aria-hidden="true"
->
-  CLASSES
-</h1>
+              className="text-[18vw] sm:text-[8rem] md:text-[10rem] lg:text-[12rem] font-extrabold text-white/5 uppercase leading-none [-webkit-text-stroke:1px_gray] sm:[-webkit-text-stroke:2px_gray]"
+              aria-hidden="true"
+            >
+              CLASSES
+            </h1>
 
             <motion.h2
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl sm:text-2xl md:text-3xl font-extrabold text-white uppercase whitespace-nowrap"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl sm:text-xl md:text-2xl lg:text-3xl font-extrabold text-white uppercase whitespace-nowrap w-full text-center"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-100px' }}
@@ -214,7 +219,7 @@ export default function ClassesSection() {
             </motion.h2>
           </div>
 
-          <div className="flex space-x-1">
+          <div className="flex space-x-1 self-end sm:self-auto">
             <NavButton
               onClick={() => sliderRef.current?.slickPrev()}
               direction="left"
@@ -226,15 +231,12 @@ export default function ClassesSection() {
           </div>
         </div>
 
-        {/* 4. Update the Slider mapping */}
-        <div className="mb-12">
+        <div className="mb-8 sm:mb-12">
           <Slider ref={sliderRef} {...settings}>
             {slides.map((slideItem, index) =>
               slideItem.type === 'placeholder' ? (
-                // Render a blank div for placeholders
                 <div key={index} className="mx-2" />
               ) : (
-                // Render the actual card
                 <ClassCard
                   key={index}
                   title={slideItem.title}
@@ -248,7 +250,7 @@ export default function ClassesSection() {
         </div>
 
         <motion.div
-          className="flex justify-center mt-8"
+          className="flex justify-center mt-6 sm:mt-8 px-4"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
@@ -256,7 +258,7 @@ export default function ClassesSection() {
         >
           <a
             href="/classes"
-            className="bg-white text-black font-bold uppercase text-xs tracking-wider py-3 px-6 rounded-md hover:bg-gray-200 transition-colors duration-300"
+            className="bg-white text-black font-bold uppercase text-xs sm:text-sm tracking-wider py-3 px-6 sm:px-8 rounded-md hover:bg-gray-200 transition-colors duration-300 w-full sm:w-auto text-center"
           >
             Browse All Classes
           </a>
