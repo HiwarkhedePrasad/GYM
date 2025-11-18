@@ -31,7 +31,7 @@ export default function HeroSection() {
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden text-center text-white">
       
-      {/* 1. BACKGROUND IMAGE (Fixed Z-Index to 0) */}
+      {/* 1. BACKGROUND IMAGE */}
       <Image
         src="/home.jpg"
         alt="Gym Background"
@@ -40,18 +40,20 @@ export default function HeroSection() {
         quality={90}
         style={{
           objectFit: "cover",
-          objectPosition: "center" 
+          // "center 25%" aligns the vertical focus near the top.
+          // You can tweak "25%" to "30%" or "35%" to move it further down/up.
+          objectPosition: "center 25%" 
         }}
-        className="absolute inset-0 z-0" // Changed from z-[-1] to z-0
+        className="absolute inset-0 z-0" 
       />
 
-      {/* 2. DARK OVERLAY (Z-Index 1 - on top of image) */}
+      {/* 2. DARK OVERLAY */}
       <div
-        className="absolute inset-0 z-10 bg-black/60" // Increased opacity slightly for readability
+        className="absolute inset-0 z-10 bg-black/60" 
         aria-hidden="true"
       ></div>
 
-      {/* 3. CONTENT (Z-Index 20 - on top of everything) */}
+      {/* 3. CONTENT */}
       <motion.div
         className="relative z-20 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8"
         variants={containerVariants}
