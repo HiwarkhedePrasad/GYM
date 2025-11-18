@@ -7,24 +7,27 @@ const trainersData = [
   {
     name: 'Rohan Verma',
     role: 'Personal Coach',
-    imgSrc: 'http://googleusercontent.com/image_collection/image_retrieval/10172667054723755190',
+    imgSrc: '/trainers/rohan.jpg', // Now using local image
+    // imgSrc: 'http://googleusercontent.com/image_collection/image_retrieval/10172667054723755190',
   },
   {
     name: 'Priya Sharma',
     role: 'Personal Coach',
-    imgSrc: 'http://googleusercontent.com/image_collection/image_retrieval/7678012537724276385',
+    imgSrc: '/trainers/priya.jpg', // Now using local image
+    // imgSrc: 'http://googleusercontent.com/image_collection/image_retrieval/7678012537724276385',
   },
   {
     name: 'Arjun Singh',
     role: 'Personal Coach',
-    imgSrc: 'http://googleusercontent.com/image_collection/image_retrieval/16846093637362713871',
+    imgSrc: '/trainers/arjun.jpg', // Now using local image
+    // imgSrc: 'http://googleusercontent.com/image_collection/image_retrieval/16846093637362713871',
   },
 ];
 
 // Re-usable Plus Icon
 const PlusIcon = () => (
   <svg
-    className="w-5 h-5 group-hover:hidden" // Fades out on hover
+    className="w-5 h-5 group-hover:hidden"
     fill="none"
     stroke="currentColor"
     viewBox="0 0 24 24"
@@ -39,10 +42,10 @@ const PlusIcon = () => (
   </svg>
 );
 
-// NEW Arrow Icon
+// Arrow Icon
 const ArrowIcon = () => (
   <svg
-    className="w-5 h-5 hidden group-hover:block" // Fades in on hover
+    className="w-5 h-5 hidden group-hover:block"
     fill="none"
     stroke="currentColor"
     viewBox="0 0 24 24"
@@ -59,25 +62,28 @@ const ArrowIcon = () => (
 
 
 // Individual Trainer Card Component
-function TrainerCard({ name, role, imgSrc }) {
+function TrainerCard({ name, role, imgSrc, index }) {
   return (
     <motion.div
-      className="flex flex-col items-center text-center group" // Added "group" for hover effects
+      className="flex flex-col items-center text-center group"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-100px' }}
-      transition={{ type: 'spring', stiffness: 90, damping: 15 }}
+      viewport={{ once: true, margin: '-50px' }}
+      // Add delay based on index for staggered effect
+      transition={{ duration: 0.5, delay: index * 0.2, type: 'spring', stiffness: 50 }}
     >
-      <div className="relative flex justify-center w-full"> {/* Centered the image */}
+      {/* Added overflow-hidden for the zoom effect */}
+      <div className="relative flex justify-center w-full overflow-hidden">
         <img
           src={imgSrc}
           alt={name}
-          className="w-[250px] h-[300px] object-cover" // Set exact size
+          // Added transition-transform and group-hover:scale-110 for zoom
+          className="w-[250px] h-[300px] object-cover transition-transform duration-500 group-hover:scale-110"
           onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/250x300/e0e0e0/999?text=Image+Failed'; }}
         />
-        <button className="absolute bottom-4 right-4 bg-red-600 text-white p-3 transition-all duration-300 group-hover:bg-black hover:scale-105">
+        <button className="absolute bottom-4 right-4 bg-red-600 text-white p-3 transition-all duration-300 group-hover:bg-black hover:scale-105 z-10">
           <PlusIcon />
-          <ArrowIcon /> {/* Added ArrowIcon here */}
+          <ArrowIcon />
         </button>
       </div>
       <div className="mt-6">
@@ -99,7 +105,7 @@ export default function TrainersSection() {
           
           {/* Background "TRAINERS" text */}
           <h1
-            className="text-[8rem] [-webkit-text-stroke:2px_gray] sm:text-[10rem] lg:text-[12rem] font-extrabold text-transparent uppercase leading-none" // Changed text-white to text-transparent
+            className="text-[8rem] [-webkit-text-stroke:2px_gray] sm:text-[10rem] lg:text-[12rem] font-extrabold text-transparent uppercase leading-none"
             aria-hidden="true"
           >
             TRAINERS
@@ -107,7 +113,7 @@ export default function TrainersSection() {
 
           {/* Foreground Title */}
           <motion.h2
-            className=" absolute text-2xl sm:text-3xl text-center lg:text-4xl font-extrabold text-black uppercase" // Removed whitespace-nowrap
+            className="absolute text-2xl sm:text-3xl text-center lg:text-4xl font-extrabold text-black uppercase"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-100px' }}
@@ -118,10 +124,11 @@ export default function TrainersSection() {
         </div>
 
         {/* Trainers Grid */}
-        <div className="flex flex-col md:flex-row justify-center gap-3 mb-20"> {/* Changed to flex, centered, and added gap-3 */}
+        <div className="flex flex-col md:flex-row justify-center gap-3 mb-20">
           {trainersData.map((trainer, index) => (
             <TrainerCard
               key={index}
+              index={index} // Pass index for stagger
               name={trainer.name}
               role={trainer.role}
               imgSrc={trainer.imgSrc}
@@ -135,7 +142,7 @@ export default function TrainersSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
-          transition={{ delay: 0.2, duration: 0.5 }}
+          transition={{ delay: 0.6, duration: 0.5 }} // Increased delay to wait for cards
         >
           <a
             href="/trainers"

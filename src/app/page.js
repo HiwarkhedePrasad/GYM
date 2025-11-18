@@ -1,5 +1,6 @@
 import AboutUsSection from "./component/About";
 import ClassesSection from "./component/Classes";
+import Footer from "./component/Footer";
 import HeroSection from "./component/hersosection";
 import HomeHeroInfo from "./component/Info";
 import Header from "./component/navbar";
@@ -13,6 +14,7 @@ export default function Home() {
       <AboutUsSection/>
       <ClassesSection/>
       <TrainersSection/>
+      <Footer/>
     </>
   )
 }
