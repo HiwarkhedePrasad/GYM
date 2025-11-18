@@ -15,22 +15,50 @@ export default function Header() {
     exit: { x: '100%', transition: { type: 'tween', ease: 'easeIn' } },
   };
 
+  // 1. Update hrefs to use ID hashes
   const navLinks = [
-    { href: '/', label: 'Home' },
-    { href: '/about', label: 'About' },
-    { href: '/classes', label: 'Classes' },
-    { href: '/trainers', label: 'Trainers' },
-    { href: '/pricing', label: 'Pricing' },
-    { href: '/contact', label: 'Contact' },
+    { href: '#home', label: 'Home' },
+    { href: '#about', label: 'About' },
+    { href: '#classes', label: 'Classes' },
+    { href: '#trainers', label: 'Trainers' },
+    // { href: '#pricing', label: 'Pricing' }, // Uncomment if you have a pricing section
+    { href: '#footer', label: 'Contact' },
   ];
+
+  // 2. Create a smooth scroll handler
+  const handleScroll = (e, href) => {
+    e.preventDefault();
+    // Only run on client-side and if href is an anchor
+    if (typeof window !== 'undefined' && href.startsWith('#')) {
+      const element = document.getElementById(href.substring(1));
+      if (element) {
+        const offset = 80; // Height of your fixed header
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.scrollY - offset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+      // Close mobile menu if open
+      setIsMobileMenuOpen(false);
+    }
+  };
 
   return (
     <>
-      <header className="top-0 z-50 w-full bg-black/80 backdrop-blur-lg text-white shadow-md">
+      {/* Added 'fixed' so the navbar stays visible while scrolling */}
+      <header className=" top-0 left-0 z-50 w-full bg-black/80 backdrop-blur-lg text-white shadow-md border-b border-white/10">
         <nav className="container mx-auto flex h-16 sm:h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           
-          {/* Logo - Smaller on mobile */}
-          <Link href="/" className="flex-shrink-0" aria-label="home">
+          {/* Logo */}
+          <Link 
+            href="#home" 
+            onClick={(e) => handleScroll(e, '#home')} 
+            className="flex-shrink-0" 
+            aria-label="home"
+          >
             <Image
               src="https://cdn.prod.website-files.com/621d8b0423efcfa5ba281fb6/621d8b0423efcf26d6282089_logo-gymfit-x-template.svg"
               alt="Gymfit X Logo"
@@ -47,6 +75,7 @@ export default function Header() {
               <Link 
                 key={link.href} 
                 href={link.href} 
+                onClick={(e) => handleScroll(e, link.href)}
                 className="text-sm font-medium transition-colors hover:text-red-500"
               >
                 {link.label}
@@ -78,7 +107,12 @@ export default function Header() {
             className="fixed inset-0 z-50 flex flex-col bg-black p-4 lg:hidden"
           >
             <div className="flex items-center justify-between">
-              <Link href="/" className="flex-shrink-0" aria-label="home" onClick={() => setIsMobileMenuOpen(false)}>
+              <Link 
+                href="#home" 
+                onClick={(e) => handleScroll(e, '#home')}
+                className="flex-shrink-0" 
+                aria-label="home"
+              >
                 <Image
                   src="https://cdn.prod.website-files.com/621d8b0423efcfa5ba281fb6/621d8b0423efcf26d6282089_logo-gymfit-x-template.svg"
                   alt="Gymfit X Logo"
@@ -96,14 +130,13 @@ export default function Header() {
               </button>
             </div>
             
-            {/* Mobile Nav Links - Better spacing and touch targets */}
             <nav className="mt-12 flex flex-col space-y-1">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
+                  onClick={(e) => handleScroll(e, link.href)}
                   className="rounded-lg px-4 py-4 text-lg font-medium text-white hover:bg-gray-800 hover:text-red-500 transition-colors active:bg-gray-700"
-                  onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.label}
                 </Link>
