@@ -5,7 +5,8 @@ import Image from 'next/image';
 
 export default function AboutUsSection() {
   return (
-    <section className="relative bg-white pt-20 sm:pt-32 md:pt-40">
+    // ADDED 'overflow-hidden' HERE to prevent text overlapping the section above
+    <section className="relative bg-white pt-20 sm:pt-32 md:pt-40 overflow-hidden">
       <div className="container mx-auto px-4 text-center">
         {/* Background "ABOUT US" text */}
         <div
