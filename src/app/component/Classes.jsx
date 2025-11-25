@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useRef } from 'react';
 import Slider from 'react-slick';
+import Image from 'next/image';
 
 // Make sure these packages are installed: npm install slick-carousel react-slick
 import 'slick-carousel/slick/slick.css';
@@ -83,11 +84,12 @@ const ArrowIcon = () => (
 const NavButton = ({ onClick, direction }) => (
   <button
     onClick={onClick}
-    className="bg-neutral-800 hover:bg-neutral-700 text-white w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center transition-colors text-sm rounded"
+    className="bg-neutral-800 hover:bg-neutral-700 text-white w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center transition-colors text-sm rounded-full"
+    aria-label={direction === 'left' ? 'Previous slide' : 'Next slide'}
   >
     {direction === 'left' ? (
       <svg
-        className="w-3 h-3 sm:w-4 sm:h-4"
+        className="w-4 h-4 sm:w-5 sm:h-5"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -102,7 +104,7 @@ const NavButton = ({ onClick, direction }) => (
       </svg>
     ) : (
       <svg
-        className="w-3 h-3 sm:w-4 sm:h-4"
+        className="w-4 h-4 sm:w-5 sm:h-5"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -122,28 +124,32 @@ const NavButton = ({ onClick, direction }) => (
 function ClassCard({ title, description, href, imgSrc }) {
   return (
     <motion.div
-      className="flex flex-col rounded-lg overflow-hidden group mx-2"
+      className="flex flex-col rounded-xl overflow-hidden group mx-2 bg-zinc-900 border border-white/5"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-100px' }}
+      viewport={{ once: true, margin: '-50px' }}
       transition={{ type: 'spring', stiffness: 90, damping: 15 }}
     >
-      <a href={href} className="block">
-        <div className="overflow-hidden rounded-t-lg">
-          <img
+      <a href={href} className="block h-full flex flex-col">
+        <div className="relative h-48 sm:h-56 overflow-hidden">
+          <Image
             src={imgSrc}
             alt={title}
-            className="w-full h-32 sm:h-36 object-cover transition-transform duration-500 group-hover:scale-105"
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-110"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
-        <div className="bg-zinc-900 p-3 sm:p-4">
-          <h3 className="text-sm sm:text-base font-bold text-white mb-2 truncate">
-            {title}
-          </h3>
-          <p className="text-xs text-neutral-400 mb-3 line-clamp-2">
-            {description}
-          </p>
-          <div className="flex items-center font-bold text-xs text-white uppercase tracking-wider group-hover:text-red-500 transition-colors">
+        <div className="p-5 flex-grow flex flex-col justify-between">
+          <div>
+            <h3 className="text-lg sm:text-xl font-bold text-white mb-2 truncate">
+              {title}
+            </h3>
+            <p className="text-sm text-neutral-400 mb-4 line-clamp-2">
+              {description}
+            </p>
+          </div>
+          <div className="flex items-center font-bold text-xs text-red-500 uppercase tracking-wider group-hover:text-white transition-colors mt-auto">
             Class Information
             <ArrowIcon />
           </div>
@@ -166,24 +172,21 @@ export default function ClassesSection() {
     arrows: false,
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1280,
         settings: {
           slidesToShow: 3,
-          slidesToScroll: 1,
         },
       },
       {
-        breakpoint: 768,
+        breakpoint: 1024,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 1,
         },
       },
       {
         breakpoint: 640,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 1,
           centerMode: true,
           centerPadding: '20px',
         },
@@ -192,34 +195,29 @@ export default function ClassesSection() {
   };
 
   return (
-    <section className="relative bg-black text-white py-20 sm:py-32 md:py-40 overflow-hidden">
+    <section className="relative bg-black text-white py-20 overflow-hidden">
       <div className="container mx-auto px-4 relative z-10">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-4">
+        <div className="flex flex-col sm:flex-row justify-between items-end mb-12 gap-6">
           
-          {/* MOBILE OPTIMIZATION HERE: 
-            Changed fixed font sizes to text-[18vw] to ensure it spans the full width 
-            on mobile devices, matching the "About Us" aesthetic.
-          */}
-          <div className="relative -mt-6 sm:-mt-10 lg:-mt-16 w-full sm:w-auto flex justify-center sm:block">
+          <div className="relative w-full sm:w-auto">
             <h1
-              className="text-[18vw] sm:text-[8rem] md:text-[10rem] lg:text-[12rem] font-extrabold text-white/5 uppercase leading-none [-webkit-text-stroke:1px_gray] sm:[-webkit-text-stroke:2px_gray]"
+              className="text-[15vw] sm:text-8xl md:text-9xl font-extrabold text-white/5 uppercase leading-none select-none"
               aria-hidden="true"
             >
               CLASSES
             </h1>
 
             <motion.h2
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl sm:text-xl md:text-2xl lg:text-3xl font-extrabold text-white uppercase whitespace-nowrap w-full text-center"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-100px' }}
-              transition={{ type: 'spring', stiffness: 100, damping: 12 }}
+              className="absolute top-1/2 left-0 -translate-y-1/2 text-3xl sm:text-4xl md:text-5xl font-extrabold text-white uppercase"
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
             >
-              DISCOVER ALL OUR CLASSES
+              Our <span className="text-red-600">Classes</span>
             </motion.h2>
           </div>
 
-          <div className="flex space-x-1 self-end sm:self-auto">
+          <div className="flex space-x-2">
             <NavButton
               onClick={() => sliderRef.current?.slickPrev()}
               direction="left"
@@ -231,7 +229,7 @@ export default function ClassesSection() {
           </div>
         </div>
 
-        <div className="mb-8 sm:mb-12">
+        <div className="mb-12">
           <Slider ref={sliderRef} {...settings}>
             {slides.map((slideItem, index) =>
               slideItem.type === 'placeholder' ? (
@@ -250,15 +248,14 @@ export default function ClassesSection() {
         </div>
 
         <motion.div
-          className="flex justify-center mt-6 sm:mt-8 px-4"
+          className="flex justify-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ delay: 0.2, duration: 0.5 }}
+          viewport={{ once: true }}
         >
           <a
             href="/classes"
-            className="bg-white text-black font-bold uppercase text-xs sm:text-sm tracking-wider py-3 px-6 sm:px-8 rounded-md hover:bg-gray-200 transition-colors duration-300 w-full sm:w-auto text-center"
+            className="bg-white text-black font-bold uppercase text-sm tracking-wider py-4 px-10 rounded-full hover:bg-gray-200 transition-colors duration-300 shadow-lg shadow-white/10"
           >
             Browse All Classes
           </a>

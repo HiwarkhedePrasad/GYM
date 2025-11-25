@@ -1,6 +1,9 @@
+
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
+import { Plus, ArrowRight } from 'lucide-react';
 
 const trainersData = [
   {
@@ -20,64 +23,37 @@ const trainersData = [
   },
 ];
 
-const PlusIcon = () => (
-  <svg
-    className="w-4 h-4 sm:w-5 sm:h-5 group-hover:hidden"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={3}
-      d="M12 6v12m6-6H6"
-    />
-  </svg>
-);
-
-const ArrowIcon = () => (
-  <svg
-    className="w-4 h-4 sm:w-5 sm:h-5 hidden group-hover:block"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={3}
-      d="M17 8l4 4m0 0l-4 4m4-4H3"
-    />
-  </svg>
-);
-
 function TrainerCard({ name, role, imgSrc, index }) {
   return (
     <motion.div
-      className="flex flex-col items-center text-center group"
+      className="flex flex-col items-center text-center group relative"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.5, delay: index * 0.2, type: 'spring', stiffness: 50 }}
     >
-      <div className="relative flex justify-center w-full overflow-hidden">
-        <img
+      <div className="relative w-full max-w-sm aspect-[3/4] overflow-hidden rounded-2xl">
+        <Image
           src={imgSrc}
           alt={name}
-          className="w-full sm:w-[250px] h-[280px] sm:h-[300px] object-cover transition-transform duration-500 group-hover:scale-110"
-          onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/250x300/e0e0e0/999?text=Image+Failed'; }}
+          fill
+          className="object-cover transition-transform duration-500 group-hover:scale-110"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          onError={(e) => { e.target.style.display = 'none'; }} // Fallback handling
         />
-        <button className="absolute bottom-4 right-4 bg-red-600 text-white p-2 sm:p-3 transition-all duration-300 group-hover:bg-black hover:scale-105 z-10">
-          <PlusIcon />
-          <ArrowIcon />
+        {/* Fallback overlay if image fails (simulated by hiding image) */}
+        <div className="absolute inset-0 bg-zinc-800 -z-10 flex items-center justify-center text-gray-500">
+          No Image
+        </div>
+
+        <button className="absolute bottom-4 right-4 bg-red-600 text-white p-3 rounded-full transition-all duration-300 group-hover:bg-black hover:scale-110 z-10 shadow-lg">
+          <Plus className="w-6 h-6 group-hover:hidden" />
+          <ArrowRight className="w-6 h-6 hidden group-hover:block" />
         </button>
       </div>
-      <div className="mt-4 sm:mt-6">
-        <h3 className="text-lg sm:text-xl font-bold text-black uppercase">{name}</h3>
-        <p className="text-xs sm:text-sm text-gray-500 uppercase tracking-wider">{role}</p>
+      <div className="mt-6">
+        <h3 className="text-2xl font-bold text-black uppercase">{name}</h3>
+        <p className="text-sm text-gray-500 uppercase tracking-wider font-medium">{role}</p>
       </div>
     </motion.div>
   );
@@ -85,34 +61,30 @@ function TrainerCard({ name, role, imgSrc, index }) {
 
 export default function TrainersSection() {
   return (
-    <section className="relative bg-white text-black min-h-screen flex items-center overflow-hidden">
-      <div className="container mx-auto px-4 relative z-10 py-16 sm:py-24 lg:py-32">
+    <section className="relative bg-white text-black py-20 overflow-hidden">
+      <div className="container mx-auto px-4 relative z-10">
         
         {/* Section Header */}
-        <div className="relative flex justify-center items-center mb-12 sm:mb-16 -mt-8 sm:-mt-16 lg:-mt-24">
-          
-          {/* Background "TRAINERS" text - Responsive sizing */}
+        <div className="relative flex justify-center items-center mb-16">
           <h1
-            className="text-[6rem] sm:text-[8rem] md:text-[10rem] lg:text-[12rem] font-extrabold text-transparent uppercase leading-none [-webkit-text-stroke:1px_gray] sm:[-webkit-text-stroke:2px_gray]"
+            className="text-[15vw] sm:text-8xl md:text-9xl font-extrabold text-gray-100 uppercase leading-none select-none"
             aria-hidden="true"
           >
             TRAINERS
           </h1>
 
-          {/* Foreground Title - Better mobile spacing */}
           <motion.h2
-            className="absolute text-xl sm:text-2xl md:text-3xl lg:text-4xl text-center font-extrabold text-black uppercase px-4"
+            className="absolute text-3xl sm:text-4xl md:text-5xl text-center font-extrabold text-black uppercase"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ type: 'spring', stiffness: 100, damping: 12 }}
+            viewport={{ once: true }}
           >
-            OUR TEAM OF <br/>PERSONAL TRAINERS
+            Meet The <span className="text-red-600">Team</span>
           </motion.h2>
         </div>
 
-        {/* Trainers Grid - Better mobile layout */}
-        <div className="flex flex-col sm:flex-row sm:flex-wrap lg:flex-nowrap justify-center gap-6 sm:gap-4 lg:gap-3 mb-12 sm:mb-20">
+        {/* Trainers Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {trainersData.map((trainer, index) => (
             <TrainerCard
               key={index}
@@ -126,17 +98,16 @@ export default function TrainersSection() {
 
         {/* Browse All Button */}
         <motion.div
-          className="flex justify-center px-4"
+          className="flex justify-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ delay: 0.6, duration: 0.5 }}
+          viewport={{ once: true }}
         >
           <a
             href="/trainers"
-            className="bg-black text-white font-bold uppercase text-xs sm:text-sm tracking-wider py-3 sm:py-4 px-6 sm:px-8 hover:bg-gray-800 transition-colors duration-300 w-full sm:w-auto text-center"
+            className="bg-black text-white font-bold uppercase text-sm tracking-wider py-4 px-10 rounded-full hover:bg-gray-800 transition-colors duration-300 shadow-lg shadow-black/20"
           >
-            Browse Trainers
+            View All Trainers
           </a>
         </motion.div>
       </div>
