@@ -111,7 +111,7 @@ export default function Testimonials() {
 
               {/* Quote */}
               <blockquote className="text-white/70 leading-relaxed mb-8 relative z-10">
-                "{testimonial.text}"
+                &ldquo;{testimonial.text}&rdquo;
               </blockquote>
 
               {/* Results Badge */}

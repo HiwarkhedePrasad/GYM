@@ -83,7 +83,7 @@ export default function AboutUsSection() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.4, duration: 0.6 }}
-              className="absolute -bottom-8 -left-8 sm:left-8 bg-[#141414] border border-white/10 p-6 z-20"
+              className="absolute -bottom-8 left-0 sm:-left-8 bg-[#141414] border border-white/10 p-6 z-20"
             >
               <div className="font-display text-5xl text-[#b87333]">10+</div>
               <div className="text-sm text-white/60 mt-1">Years of Excellence</div>

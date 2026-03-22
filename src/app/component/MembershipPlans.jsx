@@ -156,7 +156,7 @@ export default function MembershipPlans() {
                 <div className="mb-8 pb-8 border-b border-white/5">
                   <div className="flex items-baseline gap-1">
                     <span className="text-2xl text-white/60">{plan.currency}</span>
-                    <span className="font-display text-6xl text-white">{plan.price}</span>
+                    <span className="font-display text-5xl sm:text-6xl text-white">{plan.price}</span>
                   </div>
                   <span className="text-sm text-white/40">per {plan.period}</span>
                 </div>

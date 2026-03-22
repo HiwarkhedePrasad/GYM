@@ -170,7 +170,7 @@ export default function HeroSection() {
           {/* Stats Row */}
           <motion.div
             variants={itemVariants}
-            className="mt-20 grid grid-cols-3 gap-8 max-w-lg"
+            className="mt-16 sm:mt-20 grid grid-cols-3 gap-4 sm:gap-8 max-w-lg"
           >
             {[
               { value: "50+", label: "Equipment" },
