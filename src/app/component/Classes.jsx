@@ -146,6 +146,10 @@ export default function ClassesSection() {
         breakpoint: 640,
         settings: { slidesToShow: 1, centerMode: true, centerPadding: "20px" },
       },
+      {
+        breakpoint: 480,
+        settings: { slidesToShow: 1, centerMode: false, centerPadding: "0px" },
+      },
     ],
   };
 
